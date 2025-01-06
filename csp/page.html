@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excess Food Booking System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        header {
+            background: linear-gradient(to right, #fc8019, #e65c00);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 1rem auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-input {
+            flex: 1;
+            padding:1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .hotels-grid {
+            max-width: 1200px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            padding: 3rem;
+            background: #f8f9fa;
+        }
+
+        .restaurant-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .restaurant-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .restaurant-info {
+            padding: 1.5rem;
+        }
+
+        .restaurant-info h2 {
+            color: #1c1c1c;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-info {
+            color: #666;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .food-items {
+            margin: 1.5rem 0;
+        }
+
+        .food-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s ease;
+        }
+
+        .food-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .portions {
+            color: #fc8019;
+            font-weight: 600;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #fc8019;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: #e67312;
+        }
+
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .booking-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #fc8019;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .form-buttons button {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .confirm-btn {
+            background: #fc8019;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #f1f1f1;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="header-content">
+            <h1>ExcessFood</h1>
+          
+        </div>
+    </header>
+
+ 
+    <main>
+        <div class="restaurant-grid">
+            <div class="restaurant-card">
+                <img src="C:\Users\navee\OneDrive\Desktop\csp\1366844fd1421b63ff13fa17d2a82d7d_1555150577.avif" alt="moon light">
+                <div class="restaurant-info">
+                    <h2>moon light</h2>
+                    <div class="contact-info">
+                        <p>📍Katuru Rd, opposite Akruthi, Vuyyuru, Andhra Pradesh 521165</p>
+                        <p>📞 +1 234-567-8900</p>
+                        <p>⭐ 4.5 (500+ ratings)</p>
+                    </div>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <span>Chicken Biryani</span>
+                            <span class="portions">8 portions left</span>
+                        </div>
+                        <div class="food-item">
+                            <span>Paneer Butter Masala</span>
+                            <span class="portions">5 portions left</span>
+                        </div>
+                        <div class="food-item">
+                            <span>Mixed Veg Curry</span>
+                            <span class="portions">6 portions left</span>
+                        </div>
+                    </div>
+                    <button class="book-btn" onclick="openBookingForm('moon light')">Book Now</button>
+                </div>
+            </div>
+
+            <div class="restaurant-card">
+                <img src="C:\Users\navee\OneDrive\Desktop\csp\sai family resturant.jpg" alt="Sai Family Restaurant">
+                <div class="restaurant-info">
+                    <h2>Sai Family Restaurant</h2>
+                    <div class="contact-info">
+                        <p>📍  Hdfc bank, Road, Vuyyuru, Andhra Pradesh 521165</p>
+                        <p>📞 +1 234-567-8901</p>
+                        <p>⭐ 4.8 (800+ ratings)</p>
+                    </div>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <span>Butter Chicken</span>
+                            <span class="portions">10 portions left</span>
+                        </div>
+                        <div class="food-item">
+                            <span>Dal Makhani</span>
+                            <span class="portions">7 portions left</span>
+                        </div>
+                        <div class="food-item">
+                            <span>Veg Pulao</span>
+                            <span class="portions">4 portions left</span>
+                        </div>
+                    </div>
+                    <button class="book-btn" onclick="openBookingForm('Sai Family Restaurant')">Book Now</button>
+                </div>
+            </div>
+        </div>
+        <div class="restaurant-grid">
+            <div class="restaurant-card">
+                <img src="C:\Users\navee\OneDrive\Desktop\csp\kanur hub.jpg" alt="Kanuri's Hub">
+                <div class="restaurant-info">
+                    <h2>Kanuri's Hub</h2>
+                    <div class="contact-info">
+                        <p>📍  1-64, Main Road, near Little Flower School, Vuyyuru, Andhra Pradesh 521165</p>
+                        <p>📞 +1 234-567-8900</p>
+                        <p>⭐ 4.5 (500+ ratings)</p>
+                    </div>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <span>chicken biriyani</span>
+                            <span class="portions">11portions left</span>
+                        </div>
+                        <div class="food-item">
+                            <span>egg fried rice</span>
+                            <span class="portions">6 portions left</span>
+                        </div>
+                        <div class="food-item">
+                            <span>Mixed Veg Curry</span>
+                            <span class="portions">9 portions left</span>
+                        </div>
+                    </div>
+                    <button class="book-btn" onclick="openBookingForm('Kanuri's Hub')">Book Now</button>
+                </div>
+            </div>
+            
+            <div class="restaurant-grid">
+                <div class="restaurant-card">
+                    <img src="C:\Users\navee\OneDrive\Desktop\csp\Ghatotkacha.jpg" width="500px" alt="Ghatotkacha Family Restaurant">
+                    <div class="restaurant-info">
+                        <h2>Ghatotkacha Family Restaurant</h2>
+                        <div class="contact-info">
+                            <p>📍  Main Road, opposite Indian Bank, Vuyyuru, Andhra Pradesh 521165 </p>
+                            <p>📞 +1 234-567-8900</p>
+                            <p>⭐ 4.5 (500+ ratings)</p>
+                        </div>
+                        <div class="food-items">
+                            <div class="food-item">
+                                <span>Tandoori chicken</span>
+                                <span class="portions">7 portions left</span>
+                            </div>
+                            <div class="food-item">
+                                <span>chicken fried rice</span>
+                                <span class="portions">16 portions left</span>
+                            </div>
+                            <div class="food-item">
+                                <span>Veg Curry</span>
+                                <span class="portions">19 portions left</span>
+                            </div>
+                        </div>
+                        <button class="book-btn" onclick="openBookingForm('Ghatotkacha Family Restaurant')">Book Now</button>
+                    </div>
+                </div>
+    
+            
+
+        <div id="bookingModal" class="booking-modal">
+            <div class="booking-form">
+                <h2 id="modalTitle">Book Food</h2>
+                <form id="bookingForm" onsubmit="submitBooking(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address</label>
+                        <input type="text" id="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foodSelect">Select Food Items</label>
+                        <select id="foodSelect" required>
+                            <option value="">Choose an item</option>
+                        </select>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="confirm-btn">Confirm Booking</button>
+                        <button type="button" class="cancel-btn" onclick="closeBookingForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function openBookingForm(restaurantName) {
+            const modal = document.getElementById('bookingModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const foodSelect = document.getElementById('foodSelect');
+            
+            modalTitle.textContent = `Book Food from ${restaurantName}`;
+            modal.style.display = 'block';
+            
+            // Update food items based on selected restaurant
+            foodSelect.innerHTML = '';
+            const foodItems = Array.from(document.querySelectorAll('.food-items .food-item'))
+                .map(item => item.firstElementChild.textContent);
+            
+            foodItems.forEach(food => {
+                const option = document.createElement('option');
+                option.value = food;
+                option.textContent = food;
+                foodSelect.appendChild(option);
+            });
+        }
+
+        function closeBookingForm() {
+            document.getElementById('bookingModal').style.display = 'none';
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            alert('Booking confirmed! We will deliver your food soon.');
+            closeBookingForm();
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
